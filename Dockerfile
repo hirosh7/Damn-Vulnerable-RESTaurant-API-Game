@@ -9,20 +9,27 @@ RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 FROM python:3.10-slim-bookworm as runtime
 
-RUN apt-get update
-RUN apt-get -y install libpq-dev gcc vim sudo
+# Install only necessary runtime dependencies
+# Remove unnecessary packages like vim and sudo for security
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends libpq-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 WORKDIR /app
 
-# our Chef sometimes needs to find some files on the filesystem
-# we're allowing to run find with root permissions via sudo
-# in this way, our Chef is able to search everywhere across the filesystem
-RUN echo 'ALL ALL=(ALL) NOPASSWD: /usr/bin/find' | sudo tee /etc/sudoers.d/find_nopasswd > /dev/null
+# Create a dedicated non-root user with minimal privileges
+# Do NOT grant sudo access or any elevated privileges
+RUN useradd -m -u 1000 -s /bin/bash app && \
+    chown -R app:app /app
 
-# for security, we're creating a dedicated non-root user
-RUN useradd -m app
-RUN chown app .
+# Switch to non-root user BEFORE any application files are accessible
 USER app
+
+# Add security labels
+LABEL security.no-sudo="true" \
+      security.runs-as="non-root" \
+      maintainer="security@restaurant.com"

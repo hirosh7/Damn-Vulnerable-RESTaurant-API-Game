@@ -33,13 +33,20 @@ def get_order_status(
     delivery_data = fetch_order_status_from_delivery_service(order_id)
     status_value = delivery_data["status"]
 
-    raw_sql = f"""
-        UPDATE orders 
-        SET status = '{status_value}'
-        WHERE id = {order_id}
-    """
-    db.execute(text(raw_sql))
+    # Validate status value against allowed OrderStatus enum
+    try:
+        validated_status = OrderStatus(status_value)
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid status value from delivery service"
+        )
+
+    # Use parameterized query to prevent SQL injection
+    db_order.status = validated_status
+    db.add(db_order)
     db.commit()
+    db.refresh(db_order)
 
     return OrderStatusResponse(
         order_id=delivery_data["order_id"],

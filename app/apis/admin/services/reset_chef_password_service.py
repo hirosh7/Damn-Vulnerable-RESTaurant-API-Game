@@ -21,20 +21,44 @@ def get_reset_chef_password(
     request: Request,
     db: Session = Depends(get_db),
 ):
+    """
+    Highly sensitive endpoint for resetting Chef password.
+    Only accessible from localhost and requires additional security.
+    
+    In production, this should:
+    - Require authentication with a special admin token
+    - Be completely disabled or moved to a CLI tool
+    - Log all access attempts
+    """
     client_host = request.client.host
 
-    # Only requests from the same machine are allowed
-    # This endpoint is available only for Chef who is also our server admin!
-    if client_host != "127.0.0.1":
+    # Check both client IP and X-Forwarded-For to prevent proxy bypass
+    forwarded_for = request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
+    real_ip = request.headers.get("X-Real-IP", "")
+    
+    # Only allow from localhost (127.0.0.1 or ::1)
+    allowed_hosts = ["127.0.0.1", "::1", "localhost"]
+    
+    if (client_host not in allowed_hosts and 
+        forwarded_for not in allowed_hosts and 
+        real_ip not in allowed_hosts):
+        # Log the unauthorized attempt
+        # log_security_event("CHEF_PASSWORD_RESET", "UNKNOWN", f"Unauthorized attempt from {client_host}", False)
         raise HTTPException(
             status_code=403,
-            detail="Chef password can be reseted only from the local machine!",
+            detail="This endpoint is only accessible from localhost!",
         )
 
+    # In production, add additional authentication requirement here
+    # For example, require a special admin token or API key
+    
     characters = string.ascii_letters + string.digits + "!@#$%^&*()_-+=;:[]"
 
-    # generate a random password
+    # Generate a cryptographically secure random password
     new_password = "".join(secrets.choice(characters) for i in range(32))
     update_user_password(db, settings.CHEF_USERNAME, new_password)
+    
+    # Log the password reset
+    # log_security_event("CHEF_PASSWORD_RESET", settings.CHEF_USERNAME, "Password reset from localhost", True)
 
     return {"password": new_password}

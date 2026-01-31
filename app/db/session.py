@@ -19,7 +19,18 @@ def _create_engine_and_session():
             poolclass=StaticPool,
         )
     else:
-        engine = create_engine(sqlalchemy_database_url)
+        # Configure secure database connection pooling for PostgreSQL
+        engine = create_engine(
+            sqlalchemy_database_url,
+            # Connection pool settings for security and performance
+            pool_size=20,  # Maximum number of connections in the pool
+            max_overflow=10,  # Maximum number of connections that can be created beyond pool_size
+            pool_timeout=30,  # Timeout for getting a connection from the pool
+            pool_recycle=3600,  # Recycle connections after 1 hour
+            pool_pre_ping=True,  # Verify connections before using them
+            # Security: Isolate connections per transaction
+            isolation_level="READ COMMITTED",
+        )
 
     session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     return engine, session_local

@@ -51,14 +51,36 @@ async def apply_referral_code(
     db: Session = Depends(get_db),
 ):
     """Referrals can be applied by users to receive discounts."""
-    referrer = (
-        db.query(UserModel)
-        .filter(UserModel.referral_code == request.referral_code)
-        .first()
-    )
+    
+    # Prevent users from using their own referral code
+    if request.referral_code and request.referral_code.strip():
+        referrer = (
+            db.query(UserModel)
+            .filter(UserModel.referral_code == request.referral_code)
+            .first()
+        )
+    else:
+        return ApplyReferralResponse(message="Invalid referral code", discount=0.0)
 
     if referrer is None:
         return ApplyReferralResponse(message="Invalid referral code", discount=0.0)
+    
+    # Prevent users from applying their own referral code
+    if referrer.id == current_user.id:
+        return ApplyReferralResponse(message="Cannot use your own referral code", discount=0.0)
+    
+    # Check if user already applied this referral code
+    existing_coupon = (
+        db.query(DiscountCoupon)
+        .filter(
+            DiscountCoupon.user_id == current_user.id,
+            DiscountCoupon.referrer_user_id == referrer.id
+        )
+        .first()
+    )
+    
+    if existing_coupon:
+        return ApplyReferralResponse(message="You have already applied this referral code", discount=0.0)
 
     discount_coupon = DiscountCoupon(
         user_id=current_user.id,
@@ -69,7 +91,7 @@ async def apply_referral_code(
     db.commit()
 
     return ApplyReferralResponse(
-        message=f"Referral code {request.referral_code} applied successfully",
+        message=f"Referral code applied successfully",
         discount=REFERRAL_DISCOUNT_PERCENTAGE,
     )
 

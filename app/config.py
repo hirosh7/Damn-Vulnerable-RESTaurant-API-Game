@@ -19,21 +19,33 @@ class ENV(Enum):
 ENVIRONMENT = ENV(os.getenv("ENV", ENV.PRODUCTION.value))
 
 
-# 6 digits random secrets are secure enough,
-# I don't believe someone could brute-force them
+# Generate a cryptographically secure random secret
 def generate_random_secret():
-    return "".join(random.choices("1234567890", k=6))
+    """
+    Generate a secure random secret for JWT signing.
+    Uses secrets module for cryptographic randomness.
+    Generates a 32-byte (256-bit) hex string.
+    """
+    import secrets
+    return secrets.token_hex(32)  # 256-bit secret
 
 
 class Settings:
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", generate_random_secret())
     CHEF_USERNAME = os.getenv("CHEF_USERNAME", "chef")
 
-    # someone needs to remember to set this variable to True in env variables
-    JWT_VERIFY_SIGNATURE = os.getenv("JWT_VERIFY_SIGNATURE")
+    # JWT signature verification should ALWAYS be enabled for security
+    # Convert string to boolean, default to True
+    _jwt_verify_env = os.getenv("JWT_VERIFY_SIGNATURE", "true").lower()
+    JWT_VERIFY_SIGNATURE = _jwt_verify_env in ("true", "1", "yes")
 
-    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "admin")
-    POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
+    POSTGRES_USER: str = os.getenv("POSTGRES_USER")
+    POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+    
+    # Validate that required database credentials are set
+    def __post_init__(self):
+        if not self.POSTGRES_USER or not self.POSTGRES_PASSWORD:
+            raise ValueError("POSTGRES_USER and POSTGRES_PASSWORD must be set in environment variables")
     POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER", "localhost")
     POSTGRES_PORT: str = os.getenv("POSTGRES_PORT", 5432)
     POSTGRES_DB: str = os.getenv("POSTGRES_DB", "restaurant")

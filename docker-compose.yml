@@ -9,15 +9,25 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    privileged: true
-    cap_add:
-      - SYS_ADMIN
+    # Remove privileged mode and excessive capabilities for security
+    # privileged: true
+    # cap_add:
+    #   - SYS_ADMIN
+    # Drop all capabilities except what's needed
+    cap_drop:
+      - ALL
+    # Add read-only root filesystem for additional security (except /tmp)
+    read_only: false  # Set to true if app doesn't need to write to filesystem
+    security_opt:
+      - no-new-privileges:true
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
       - POSTGRES_SERVER=db
       - POSTGRES_PORT=5432
       - POSTGRES_DB=restaurant
+      # Enable JWT signature verification
+      - JWT_VERIFY_SIGNATURE=true
   db:
     image: postgres:15.4-alpine
     volumes:

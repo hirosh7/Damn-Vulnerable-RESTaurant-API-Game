@@ -19,9 +19,19 @@ def get_orders(
     db: Session = Depends(get_db),
     auth=Depends(RolesBasedAuthChecker([UserRole.CUSTOMER])),
 ):
+    # Enforce maximum result set size to prevent resource exhaustion
+    MAX_LIMIT = 100
+    if limit > MAX_LIMIT:
+        limit = MAX_LIMIT
+    
+    # Validate skip parameter
+    if skip < 0:
+        skip = 0
+    
     orders = (
         db.query(Order)
         .filter(Order.user_id == current_user.id)
+        .order_by(Order.date_ordered.desc())
         .offset(skip)
         .limit(limit)
         .all()

@@ -1,6 +1,6 @@
 from apis.auth.schemas import TokenData
 from apis.auth.utils.utils import get_user_by_username
-from config import Settings
+from config import settings
 from db.session import get_db
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -8,9 +8,10 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 from typing_extensions import Annotated
 
-SECRET_KEY = Settings.JWT_SECRET_KEY
+SECRET_KEY = settings.JWT_SECRET_KEY
 ALGORITHM = "HS256"
-VERIFY_SIGNATURE = False
+# ALWAYS verify JWT signatures for security
+VERIFY_SIGNATURE = settings.JWT_VERIFY_SIGNATURE
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
