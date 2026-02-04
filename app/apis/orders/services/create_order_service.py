@@ -23,9 +23,12 @@ def create_order(
     coupon = None
     discount_percentage = 0
     if order.coupon_id:
+        # Use pessimistic locking (SELECT FOR UPDATE) to prevent race conditions
+        # This acquires an exclusive lock on the coupon row for the duration of the transaction
         coupon = (
             db.query(DiscountCoupon)
             .filter(DiscountCoupon.id == order.coupon_id)
+            .with_for_update()  # Acquire exclusive lock
             .first()
         )
 
@@ -40,6 +43,13 @@ def create_order(
                 status_code=400,
                 detail="Coupon has already been used",
             )
+        
+        # Mark coupon as used IMMEDIATELY after validation to prevent TOCTOU
+        coupon.used = True
+        coupon.used_at = datetime.utcnow()
+        db.add(coupon)
+        db.flush()  # Persist the change within transaction (before commit)
+        
         discount_percentage = coupon.discount_percentage
 
     total_price = 0
@@ -78,13 +88,9 @@ def create_order(
         total_price += db_item.price * item.quantity
 
     db_order.final_price = total_price - (total_price * (discount_percentage / 100))
+    
+    # Commit all changes (order, items, and coupon usage) in a single transaction
     db.commit()
     db.refresh(db_order)
-
-    if coupon:
-        coupon.used = True
-        coupon.used_at = datetime.utcnow()
-        db.add(coupon)
-        db.commit()
 
     return db_order

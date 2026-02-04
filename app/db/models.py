@@ -43,6 +43,11 @@ class User(Base):
     reset_password_code = Column(String, nullable=True)
     reset_password_code_expiry_date = Column(DateTime, nullable=True)
     referral_code = Column(String, unique=True, index=True, nullable=True)
+    
+    # Phone verification fields
+    phone_verified = Column(Boolean, default=False)
+    phone_verification_code = Column(String, nullable=True)
+    phone_verification_code_expiry = Column(DateTime, nullable=True)
 
     orders = relationship("Order", back_populates="user")
 

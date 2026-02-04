@@ -1,3 +1,4 @@
+import html
 from typing import Optional
 
 from pydantic import BaseModel, Field, validator
@@ -12,18 +13,18 @@ class MenuItemCreate(BaseModel):
     
     @validator('name', 'category', 'description')
     def validate_text_fields(cls, v, field):
-        """Validate text fields for XSS and injection attempts"""
+        """
+        Sanitize text fields to prevent XSS attacks.
+        Uses HTML entity encoding to neutralize any HTML/JavaScript content.
+        """
         if v is None:
             return v
         
-        # Check for suspicious patterns
-        suspicious_patterns = ['<script', 'javascript:', 'onerror=', 'onclick=']
-        v_lower = v.lower()
-        for pattern in suspicious_patterns:
-            if pattern in v_lower:
-                raise ValueError(f'{field.name} contains invalid characters')
+        # HTML-encode the input to neutralize any HTML/JavaScript
+        # This converts < to &lt;, > to &gt;, etc.
+        sanitized = html.escape(v.strip())
         
-        return v.strip()
+        return sanitized
     
     @validator('price')
     def validate_price(cls, v):

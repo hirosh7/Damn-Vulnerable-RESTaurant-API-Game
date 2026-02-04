@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta, timezone
 from typing import Union
 
@@ -126,7 +127,32 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
 
 
 def send_code_to_phone_number(phone_number: str, code: str):
-    # normally this would send a code to the phone number using
-    # a third party service
-    print(f"Sending code {code} to phone number {phone_number}")
+    """
+    Send password reset code via SMS.
+    In production, integrate with SMS provider (Twilio, AWS SNS, etc.).
+    
+    Args:
+        phone_number: Recipient phone number
+        code: Password reset code (sensitive - never log)
+    
+    Returns:
+        bool: True if successful
+    """
+    # Mask phone number for secure logging (show only last 4 digits)
+    if phone_number and len(phone_number) >= 4:
+        masked_phone = '*' * (len(phone_number) - 4) + phone_number[-4:]
+    else:
+        masked_phone = '****'
+    
+    # Log the event without sensitive data
+    logger = logging.getLogger("security")
+    logger.info(f"Password reset code sent to phone ending in {masked_phone[-4:]}")
+    
+    # TODO: In production, integrate with actual SMS provider
+    # Example: twilio_client.messages.create(to=phone_number, body=f"Your code: {code}")
+    
+    # For development/testing only - remove in production
+    # DO NOT print sensitive codes to stdout/logs in production
+    print(f"[DEV ONLY] Code sent to {masked_phone}")
+    
     return True

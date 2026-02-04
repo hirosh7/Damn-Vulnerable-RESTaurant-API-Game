@@ -4,6 +4,9 @@ router = APIRouter()
 
 
 @router.get("/healthcheck")
-def healthcheck(response: Response):
-    response.headers["X-Powered-By"] = "Python 3.10, FastAPI ^0.103.0"
+def healthcheck():
+    """
+    Health check endpoint for monitoring application status.
+    Does not expose any technology stack information for security reasons.
+    """
     return {"ok": True}

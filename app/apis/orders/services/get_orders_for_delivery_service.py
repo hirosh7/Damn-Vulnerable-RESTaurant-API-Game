@@ -27,9 +27,9 @@ def verify_delivery_service_api_key(x_api_key: str = Header(None)):
             headers={"WWW-Authenticate": "ApiKey"},
         )
     
+    # Validate against the set of valid API keys
     # In production, validate against database of registered delivery services
-    # For now, check against the set of valid keys
-    if x_api_key not in VALID_API_KEYS and x_api_key != "delivery-service-api-key":
+    if x_api_key not in VALID_API_KEYS:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid API key. Access denied.",

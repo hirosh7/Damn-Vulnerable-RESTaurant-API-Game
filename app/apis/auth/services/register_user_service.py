@@ -1,7 +1,11 @@
+import secrets
+from datetime import datetime, timedelta
+
 from apis.auth.exceptions import UserAlreadyExistsException
 from apis.auth.password_validator import validate_password_strength
 from apis.auth.schemas import UserCreate, UserRead
 from apis.auth.utils import create_user
+from apis.auth.utils.utils import send_code_to_phone_number
 from db.session import get_db
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from rate_limiting import limiter
@@ -49,6 +53,22 @@ async def register_user(
             user.last_name,
             user.phone_number,
         )
+        
+        # Generate and send phone verification code
+        verification_code = "".join(
+            secrets.choice("0123456789") for _ in range(6)
+        )
+        db_user.phone_verification_code = verification_code
+        db_user.phone_verification_code_expiry = datetime.now() + timedelta(minutes=10)
+        db_user.phone_verified = False
+        
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        
+        # Send verification code via SMS
+        send_code_to_phone_number(db_user.phone_number, verification_code)
+        
     except UserAlreadyExistsException:
         # Use generic message to prevent user enumeration
         raise HTTPException(
