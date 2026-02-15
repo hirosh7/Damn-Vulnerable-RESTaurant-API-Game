@@ -166,3 +166,6 @@ test_db.db
 
 # IDE settings
 .vscode/settings.json
+
+# SpecStory
+.specstory/
