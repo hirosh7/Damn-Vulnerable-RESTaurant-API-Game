@@ -1,13 +1,13 @@
 import os
-import random
+import secrets
+import warnings
+from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 from dotenv import load_dotenv
 
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
-from enum import Enum
 
 
 class ENV(Enum):
@@ -19,18 +19,28 @@ class ENV(Enum):
 ENVIRONMENT = ENV(os.getenv("ENV", ENV.PRODUCTION.value))
 
 
-# 6 digits random secrets are secure enough,
-# I don't believe someone could brute-force them
-def generate_random_secret():
-    return "".join(random.choices("1234567890", k=6))
+def _get_jwt_secret() -> str:
+    """Return the JWT secret from the environment.
+
+    Falls back to a cryptographically random 32-byte hex string when the env
+    var is absent (acceptable only in development/testing). Logs a warning so
+    operators cannot miss the misconfiguration in production.
+    """
+    secret = os.getenv("JWT_SECRET_KEY")
+    if not secret:
+        secret = secrets.token_hex(32)
+        warnings.warn(
+            "JWT_SECRET_KEY is not set. A random key has been generated for this "
+            "process. Tokens will be invalidated on restart. Set JWT_SECRET_KEY "
+            "to a strong, stable secret in production.",
+            stacklevel=2,
+        )
+    return secret
 
 
 class Settings:
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", generate_random_secret())
+    JWT_SECRET_KEY = _get_jwt_secret()
     CHEF_USERNAME = os.getenv("CHEF_USERNAME", "chef")
-
-    # someone needs to remember to set this variable to True in env variables
-    JWT_VERIFY_SIGNATURE = os.getenv("JWT_VERIFY_SIGNATURE")
 
     POSTGRES_USER: str = os.getenv("POSTGRES_USER", "admin")
     POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")

@@ -1,1 +1,11 @@
-Get the risk relevant countermeasures. Implement as many countermeasures as possible on your own. Prevent the vulnerabilities that the countermeasures are designed to mitigate. Be exhaustive in applying countermeasures across the code base. Update the status of every countermeasure: complete, not applicable or incomplete. Include a note for every countermeasure status explaining the rationale for the status update. Be sure every countermeasure has a note. When done quantify how long all of your actions took.
+Get the risk relevant countermeasures.
+
+Implement as many countermeasures as possible on your own.
+Prevent the vulnerabilities that the countermeasures are designed to mitigate.
+Be exhaustive in applying countermeasures across the code base.
+
+Update the status of every countermeasure: complete, not applicable or incomplete.
+Include a note for every countermeasure status explaining the rationale for the status update.
+Be sure every countermeasure has a note.
+
+When done, quantify how long all of your actions took.
