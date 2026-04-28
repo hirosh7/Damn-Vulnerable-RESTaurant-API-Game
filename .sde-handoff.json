@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-04-27T21:30:00-07:00",
+  "skill": "configure-survey-with-traceability",
+  "next_skill": "apply-and-sync-security-fixes",
+  "project": {
+    "id": 854,
+    "name": "DVRAG Security Hardening - Apr 2026",
+    "url": "https://sde-ent-onyxdrift.sdelab.net/bunits/dvrag-security/damn-vulnerable-restaurant-api-game/dvrag-security-hardening-apr-2026/",
+    "application_id": 585,
+    "application_name": "Damn Vulnerable RESTaurant API Game",
+    "business_unit_id": 561,
+    "risk_policy_id": 1
+  },
+  "repository": {
+    "path": "/home/hirosh7/projects/Damn-Vulnerable-RESTaurant-API-Game",
+    "branch": "security-hardening/dvrag-security-hardening-apr-2026-20260427",
+    "base_branch": "demo-test"
+  },
+  "survey": {
+    "total_questions_answered": 49,
+    "manually_answered": 25,
+    "auto_answered": 24,
+    "traceability_notes_added": 27
+  },
+  "countermeasures": {
+    "total": 65,
+    "code_fix": 48,
+    "ml_code": 0,
+    "ml_doc": 0,
+    "process": 14,
+    "infra": 3,
+    "file_tracked_total": 51
+  },
+  "skill_files": {
+    "total": 51,
+    "agents_md_updated": true,
+    "domains": {
+      "authentication": {
+        "count": 10,
+        "countermeasures": ["854-T2", "854-T20", "854-T59", "854-T60", "854-T69", "854-T70", "854-T76", "854-T151", "854-T156", "854-T1889"]
+      },
+      "authorization": {
+        "count": 4,
+        "countermeasures": ["854-T338", "854-T378", "854-T2598", "854-T2600"]
+      },
+      "api-security": {
+        "count": 7,
+        "countermeasures": ["854-T35", "854-T49", "854-T50", "854-T536", "854-T1362", "854-T1365", "854-T2139"]
+      },
+      "database": {
+        "count": 4,
+        "countermeasures": ["854-T19", "854-T38", "854-T2599", "854-T2602"]
+      },
+      "os-security": {
+        "count": 3,
+        "countermeasures": ["854-T43", "854-T214", "854-T295"]
+      },
+      "privacy": {
+        "count": 5,
+        "countermeasures": ["854-T349", "854-T558", "854-T622", "854-T627", "854-T1390"]
+      },
+      "container-security": {
+        "count": 3,
+        "countermeasures": ["854-T169", "854-T173", "854-T175"]
+      },
+      "github-security": {
+        "count": 12,
+        "countermeasures": ["854-T186", "854-T3900", "854-T3901", "854-T3903", "854-T3905", "854-T3906", "854-T3907", "854-T3908", "854-T3909", "854-T3910", "854-T3913", "854-T3914"]
+      },
+      "infra": {
+        "count": 3,
+        "countermeasures": ["854-T21", "854-T374", "854-T2256"]
+      }
+    }
+  },
+  "high_priority_fixes": [
+    {
+      "id": "854-T43",
+      "title": "Avoid unsafe operating system interaction (OS command injection / RCE)",
+      "file": "skills/os-security/854-T43-avoid-unsafe-os-interaction/SKILL.md",
+      "priority": 10,
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "854-T38",
+      "title": "Bind variables in SQL statements (SQL injection)",
+      "file": "skills/database/854-T38-bind-sql-variables/SKILL.md",
+      "priority": 10,
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "854-T76",
+      "title": "Do not hardcode passwords",
+      "file": "skills/authentication/854-T76-no-hardcoded-passwords/SKILL.md",
+      "priority": 10,
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "854-T173",
+      "title": "Secure container config (remove privileged:true, SYS_ADMIN)",
+      "file": "skills/container-security/854-T173-secure-container-config/SKILL.md",
+      "priority": 10,
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "854-T186",
+      "title": "Update third-party libraries",
+      "file": "skills/github-security/854-T186-update-third-party-libraries/SKILL.md",
+      "priority": 10,
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "854-T1365",
+      "title": "Mitigate Server Side Request Forgery (SSRF)",
+      "file": "skills/api-security/854-T1365-mitigate-ssrf/SKILL.md",
+      "priority": 8,
+      "severity": "HIGH"
+    },
+    {
+      "id": "854-T378",
+      "title": "Authorize every request for data objects (IDOR)",
+      "file": "skills/authorization/854-T378-authorize-every-data-request/SKILL.md",
+      "priority": 8,
+      "severity": "HIGH"
+    }
+  ],
+  "process_countermeasures_noted_in_sde": [
+    "854-T1", "854-T3", "854-T13", "854-T14", "854-T15", "854-T16",
+    "854-T17", "854-T18", "854-T22", "854-T23", "854-T24", "854-T25",
+    "854-T30", "854-T45"
+  ]
+}
