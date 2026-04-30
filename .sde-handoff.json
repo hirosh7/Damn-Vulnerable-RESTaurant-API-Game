@@ -1,133 +1,727 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-04-27T21:30:00-07:00",
-  "skill": "configure-survey-with-traceability",
-  "next_skill": "apply-and-sync-security-fixes",
-  "project": {
-    "id": 854,
-    "name": "DVRAG Security Hardening - Apr 2026",
-    "url": "https://sde-ent-onyxdrift.sdelab.net/bunits/dvrag-security/damn-vulnerable-restaurant-api-game/dvrag-security-hardening-apr-2026/",
+  "generated_at": "2026-04-30",
+  "skill": "configure-survey-and-generate-specs",
+  "repository": "/home/hirosh7/projects/Damn-Vulnerable-RESTaurant-API-Game",
+  "branch": "security-hardening/dvrag-20260430",
+  "sde": {
+    "project_id": 858,
+    "project_name": "dvrag_20260430",
+    "project_url": "https://sde-ent-onyxdrift.sdelab.net/bunits/dvrag-security/damn-vulnerable-restaurant-api-game/dvrag_20260430/",
     "application_id": 585,
-    "application_name": "Damn Vulnerable RESTaurant API Game",
     "business_unit_id": 561,
-    "risk_policy_id": 1
+    "risk_policy_id": 2,
+    "total_countermeasures": 400
   },
-  "repository": {
-    "path": "/home/hirosh7/projects/Damn-Vulnerable-RESTaurant-API-Game",
-    "branch": "security-hardening/dvrag-security-hardening-apr-2026-20260427",
-    "base_branch": "demo-test"
+  "classification": {
+    "CODE_FIX": 99,
+    "INFRA": 70,
+    "PROCESS": 231,
+    "ML_CODE": 0,
+    "ML_DOC": 0,
+    "total": 400
   },
-  "survey": {
-    "total_questions_answered": 49,
-    "manually_answered": 25,
-    "auto_answered": 24,
-    "traceability_notes_added": 27
-  },
-  "countermeasures": {
-    "total": 65,
-    "code_fix": 48,
-    "ml_code": 0,
-    "ml_doc": 0,
-    "process": 14,
-    "infra": 3,
-    "file_tracked_total": 51
-  },
-  "skill_files": {
-    "total": 51,
-    "agents_md_updated": true,
-    "domains": {
-      "authentication": {
-        "count": 10,
-        "countermeasures": ["854-T2", "854-T20", "854-T59", "854-T60", "854-T69", "854-T70", "854-T76", "854-T151", "854-T156", "854-T1889"]
-      },
-      "authorization": {
-        "count": 4,
-        "countermeasures": ["854-T338", "854-T378", "854-T2598", "854-T2600"]
-      },
-      "api-security": {
-        "count": 7,
-        "countermeasures": ["854-T35", "854-T49", "854-T50", "854-T536", "854-T1362", "854-T1365", "854-T2139"]
-      },
-      "database": {
-        "count": 4,
-        "countermeasures": ["854-T19", "854-T38", "854-T2599", "854-T2602"]
-      },
-      "os-security": {
-        "count": 3,
-        "countermeasures": ["854-T43", "854-T214", "854-T295"]
-      },
-      "privacy": {
-        "count": 5,
-        "countermeasures": ["854-T349", "854-T558", "854-T622", "854-T627", "854-T1390"]
-      },
-      "container-security": {
-        "count": 3,
-        "countermeasures": ["854-T169", "854-T173", "854-T175"]
-      },
-      "github-security": {
-        "count": 12,
-        "countermeasures": ["854-T186", "854-T3900", "854-T3901", "854-T3903", "854-T3905", "854-T3906", "854-T3907", "854-T3908", "854-T3909", "854-T3910", "854-T3913", "854-T3914"]
-      },
-      "infra": {
-        "count": 3,
-        "countermeasures": ["854-T21", "854-T374", "854-T2256"]
-      }
+  "outputs": {
+    "agents_md": "AGENTS.md",
+    "skill_files_count": 169,
+    "skill_files_root": "skills/",
+    "domain_distribution": {
+      "api-security": 16,
+      "authentication": 15,
+      "authorization": 7,
+      "container-config": 14,
+      "container-ops": 39,
+      "crypto-random": 4,
+      "data-access": 6,
+      "database-ops": 19,
+      "dependency-config": 4,
+      "deployment": 10,
+      "error-handling": 2,
+      "input-validation": 6,
+      "logging-audit": 5,
+      "misc": 7,
+      "network-infra": 2,
+      "session-management": 7,
+      "ssrf-injection": 3,
+      "user-data": 3
     }
   },
-  "high_priority_fixes": [
-    {
-      "id": "854-T43",
-      "title": "Avoid unsafe operating system interaction (OS command injection / RCE)",
-      "file": "skills/os-security/854-T43-avoid-unsafe-os-interaction/SKILL.md",
-      "priority": 10,
-      "severity": "CRITICAL"
+  "cm_domain_map": {
+    "T19": {
+      "domain": "data-access",
+      "location": "app/db/session.py"
     },
-    {
-      "id": "854-T38",
-      "title": "Bind variables in SQL statements (SQL injection)",
-      "file": "skills/database/854-T38-bind-sql-variables/SKILL.md",
-      "priority": 10,
-      "severity": "CRITICAL"
+    "T1919": {
+      "domain": "authentication",
+      "location": "app/apis/auth/utils/jwt_auth.py"
     },
-    {
-      "id": "854-T76",
-      "title": "Do not hardcode passwords",
-      "file": "skills/authentication/854-T76-no-hardcoded-passwords/SKILL.md",
-      "priority": 10,
-      "severity": "CRITICAL"
+    "T281": {
+      "domain": "authentication",
+      "location": "app/apis/auth/utils/jwt_auth.py"
     },
-    {
-      "id": "854-T173",
-      "title": "Secure container config (remove privileged:true, SYS_ADMIN)",
-      "file": "skills/container-security/854-T173-secure-container-config/SKILL.md",
-      "priority": 10,
-      "severity": "CRITICAL"
+    "T284": {
+      "domain": "authentication",
+      "location": "app/apis/auth/utils/utils.py:117"
     },
-    {
-      "id": "854-T186",
-      "title": "Update third-party libraries",
-      "file": "skills/github-security/854-T186-update-third-party-libraries/SKILL.md",
-      "priority": 10,
-      "severity": "CRITICAL"
+    "T285": {
+      "domain": "authentication",
+      "location": "app/apis/auth/utils/jwt_auth.py"
     },
-    {
-      "id": "854-T1365",
-      "title": "Mitigate Server Side Request Forgery (SSRF)",
-      "file": "skills/api-security/854-T1365-mitigate-ssrf/SKILL.md",
-      "priority": 8,
-      "severity": "HIGH"
+    "T26": {
+      "domain": "authentication",
+      "location": "app/apis/auth/services/get_token_service.py"
     },
-    {
-      "id": "854-T378",
-      "title": "Authorize every request for data objects (IDOR)",
-      "file": "skills/authorization/854-T378-authorize-every-data-request/SKILL.md",
-      "priority": 8,
-      "severity": "HIGH"
+    "T20": {
+      "domain": "authentication",
+      "location": "app/apis/auth/utils/jwt_auth.py"
+    },
+    "T2": {
+      "domain": "authentication",
+      "location": "app/apis/auth/services/reset_password_new_password_service.py"
+    },
+    "T6": {
+      "domain": "authentication",
+      "location": "app/apis/auth/services/get_token_service.py:17"
+    },
+    "T5": {
+      "domain": "authentication",
+      "location": "app/apis/auth/services/register_user_service.py"
+    },
+    "T7": {
+      "domain": "authentication",
+      "location": "app/apis/auth/utils/utils.py:21"
+    },
+    "T3": {
+      "domain": "authentication",
+      "location": "app/apis/auth/services/update_profile_service.py"
+    },
+    "T8": {
+      "domain": "authentication",
+      "location": "app/apis/auth/services/get_token_service.py"
+    },
+    "T517": {
+      "domain": "authentication",
+      "location": "app/apis/auth/services/register_user_service.py"
+    },
+    "T286": {
+      "domain": "authentication",
+      "location": "app/apis/auth/utils/utils.py"
+    },
+    "T151": {
+      "domain": "authentication",
+      "location": "app/apis/referrals/utils.py:11"
+    },
+    "T378": {
+      "domain": "authorization",
+      "location": "app/apis/orders/services/get_order_service.py"
+    },
+    "T17": {
+      "domain": "authorization",
+      "location": "app/apis/orders/services/get_order_status.py"
+    },
+    "T184": {
+      "domain": "authorization",
+      "location": "app/apis/orders/services/"
+    },
+    "T2598": {
+      "domain": "authorization",
+      "location": "app/apis/orders/services/get_order_service.py"
+    },
+    "T16": {
+      "domain": "authorization",
+      "location": "app/apis/orders/services/"
+    },
+    "T33": {
+      "domain": "authorization",
+      "location": "app/apis/auth/services/update_profile_service.py:27"
+    },
+    "T338": {
+      "domain": "authorization",
+      "location": "app/apis/auth/utils/jwt_auth.py"
+    },
+    "T38": {
+      "domain": "data-access",
+      "location": "app/apis/orders/services/get_order_status.py:36"
+    },
+    "T42": {
+      "domain": "data-access",
+      "location": "app/apis/orders/services/get_order_status.py:34"
+    },
+    "T2600": {
+      "domain": "data-access",
+      "location": "app/apis/orders/services/get_orders_for_delivery_service.py"
+    },
+    "T2602": {
+      "domain": "data-access",
+      "location": "app/db/session.py"
+    },
+    "T2599": {
+      "domain": "data-access",
+      "location": "app/config.py:46"
+    },
+    "T1365": {
+      "domain": "ssrf-injection",
+      "location": "app/apis/menu/utils.py:10"
+    },
+    "T43": {
+      "domain": "ssrf-injection",
+      "location": "app/apis/admin/utils.py:26"
+    },
+    "T162": {
+      "domain": "ssrf-injection",
+      "location": "app/apis/admin/utils.py"
+    },
+    "T257": {
+      "domain": "api-security",
+      "location": "app/init_app.py:20"
+    },
+    "T331": {
+      "domain": "api-security",
+      "location": "app/init_app.py:31"
+    },
+    "T322": {
+      "domain": "api-security",
+      "location": "app/init_app.py:36"
+    },
+    "T1469": {
+      "domain": "api-security",
+      "location": "app/init_app.py:39"
+    },
+    "T1873": {
+      "domain": "api-security",
+      "location": "app/init_app.py:31"
+    },
+    "T1362": {
+      "domain": "api-security",
+      "location": "app/rate_limiting.py"
+    },
+    "T536": {
+      "domain": "api-security",
+      "location": "app/init_app.py"
+    },
+    "T65": {
+      "domain": "api-security",
+      "location": "app/apis/router.py"
+    },
+    "T35": {
+      "domain": "api-security",
+      "location": "app/config.py"
+    },
+    "T49": {
+      "domain": "api-security",
+      "location": "app/apis/router.py:15"
+    },
+    "T374": {
+      "domain": "api-security",
+      "location": "app/init_app.py"
+    },
+    "T569": {
+      "domain": "api-security",
+      "location": "app/apis/"
+    },
+    "T2139": {
+      "domain": "api-security",
+      "location": "app/apis/debug/services/get_debug_info_service.py"
+    },
+    "T599": {
+      "domain": "api-security",
+      "location": "app/init_app.py"
+    },
+    "T31": {
+      "domain": "input-validation",
+      "location": "app/apis/"
+    },
+    "T34": {
+      "domain": "input-validation",
+      "location": "app/apis/"
+    },
+    "T74": {
+      "domain": "input-validation",
+      "location": "app/apis/"
+    },
+    "T1148": {
+      "domain": "input-validation",
+      "location": "app/apis/"
+    },
+    "T36": {
+      "domain": "input-validation",
+      "location": "app/apis/"
+    },
+    "T22": {
+      "domain": "session-management",
+      "location": "app/config.py"
+    },
+    "T23": {
+      "domain": "session-management",
+      "location": "app/config.py"
+    },
+    "T24": {
+      "domain": "session-management",
+      "location": "app/apis/auth/utils/jwt_auth.py"
+    },
+    "T557": {
+      "domain": "session-management",
+      "location": "app/init_app.py"
+    },
+    "T404": {
+      "domain": "session-management",
+      "location": "app/init_app.py"
+    },
+    "T429": {
+      "domain": "session-management",
+      "location": "app/apis/auth/utils/jwt_auth.py"
+    },
+    "T427": {
+      "domain": "session-management",
+      "location": "app/apis/auth/services/get_token_service.py"
+    },
+    "T45": {
+      "domain": "logging-audit",
+      "location": "app/apis/auth/services/"
+    },
+    "T71": {
+      "domain": "logging-audit",
+      "location": "app/apis/"
+    },
+    "T46": {
+      "domain": "logging-audit",
+      "location": "app/apis/debug/services/get_debug_info_service.py"
+    },
+    "T219": {
+      "domain": "logging-audit",
+      "location": "app/apis/"
+    },
+    "T64": {
+      "domain": "logging-audit",
+      "location": "app/init_app.py"
+    },
+    "T159": {
+      "domain": "error-handling",
+      "location": "app/apis/"
+    },
+    "T39": {
+      "domain": "error-handling",
+      "location": "app/apis/"
+    },
+    "T60": {
+      "domain": "crypto-random",
+      "location": "app/apis/auth/utils/utils.py:13"
+    },
+    "T59": {
+      "domain": "crypto-random",
+      "location": "app/apis/auth/utils/utils.py:13"
+    },
+    "T295": {
+      "domain": "crypto-random",
+      "location": "app/config.py"
+    },
+    "T345": {
+      "domain": "crypto-random",
+      "location": "app/config.py"
+    },
+    "T177": {
+      "domain": "user-data",
+      "location": "app/apis/users/services/"
+    },
+    "T179": {
+      "domain": "user-data",
+      "location": "app/apis/users/services/"
+    },
+    "T50": {
+      "domain": "user-data",
+      "location": "app/apis/"
+    },
+    "T4747": {
+      "domain": "container-config",
+      "location": "docker-compose.yml:12"
+    },
+    "T1186": {
+      "domain": "container-config",
+      "location": "Dockerfile"
+    },
+    "T1184": {
+      "domain": "container-config",
+      "location": "Dockerfile"
+    },
+    "T1178": {
+      "domain": "container-config",
+      "location": "Dockerfile:11"
+    },
+    "T1174": {
+      "domain": "container-config",
+      "location": "Dockerfile:24"
+    },
+    "T2349": {
+      "domain": "container-config",
+      "location": "Dockerfile"
+    },
+    "T61": {
+      "domain": "container-config",
+      "location": "docker-compose.yml:15"
+    },
+    "T2665": {
+      "domain": "container-config",
+      "location": "docker-compose.yml:15"
+    },
+    "T856": {
+      "domain": "container-config",
+      "location": "docker-compose.yml"
+    },
+    "T1238": {
+      "domain": "container-config",
+      "location": "Dockerfile"
+    },
+    "T4746": {
+      "domain": "container-config",
+      "location": "Dockerfile"
+    },
+    "T4751": {
+      "domain": "container-config",
+      "location": "Dockerfile"
+    },
+    "T214": {
+      "domain": "container-config",
+      "location": "Dockerfile"
+    },
+    "T186": {
+      "domain": "dependency-config",
+      "location": "pyproject.toml"
+    },
+    "T371": {
+      "domain": "dependency-config",
+      "location": "app/config.py"
+    },
+    "T435": {
+      "domain": "dependency-config",
+      "location": "app/init_app.py:33"
+    },
+    "T44": {
+      "domain": "dependency-config",
+      "location": "app/init_app.py"
+    },
+    "T375": {
+      "domain": "misc",
+      "location": "app/apis/"
+    },
+    "T205": {
+      "domain": "misc",
+      "location": "app/apis/"
+    },
+    "T206": {
+      "domain": "misc",
+      "location": "app/apis/"
+    },
+    "T166": {
+      "domain": "misc",
+      "location": "app/apis/"
+    },
+    "T66": {
+      "domain": "misc",
+      "location": "app/init_app.py:35"
+    },
+    "T572": {
+      "domain": "misc",
+      "location": "app/apis/admin/utils.py"
+    },
+    "T67": {
+      "domain": "misc",
+      "location": "app/apis/auth/services/"
+    },
+    "T855": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T1152": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1168": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1204": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1200": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1212": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1234": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1214": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2667": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2115": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2257": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2109": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1160": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2603": {
+      "domain": "database-ops",
+      "location": "external"
+    },
+    "T2258": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T1188": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2664": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1166": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2661": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T4601": {
+      "domain": "network-infra",
+      "location": "external"
+    },
+    "T1156": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2113": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2663": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T4749": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2478": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T2652": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T1154": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T4748": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2616": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1198": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1192": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1210": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T21": {
+      "domain": "network-infra",
+      "location": "external"
+    },
+    "T1150": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1194": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1162": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1172": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2111": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T858": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T2604": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T2668": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2622": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2105": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1206": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1190": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2623": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2621": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1202": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1196": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1208": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2620": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2601": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1180": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1176": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2618": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1236": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2107": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1158": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T1182": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2662": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2619": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2605": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T456": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T2617": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2597": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T1923": {
+      "domain": "deployment",
+      "location": "external"
+    },
+    "T2615": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T2666": {
+      "domain": "database-ops",
+      "location": "docker-compose.yml"
+    },
+    "T3990": {
+      "domain": "database-ops",
+      "location": "external"
+    },
+    "T1232": {
+      "domain": "container-ops",
+      "location": "docker-compose.yml"
+    },
+    "T11": {
+      "domain": "api-security",
+      "location": "app/apis/"
+    },
+    "T1144": {
+      "domain": "input-validation",
+      "location": "app/apis/"
+    },
+    "T63": {
+      "domain": "api-security",
+      "location": "app/init_app.py"
+    },
+    "T76": {
+      "domain": "container-config",
+      "location": "docker-compose.yml:15"
     }
-  ],
-  "process_countermeasures_noted_in_sde": [
-    "854-T1", "854-T3", "854-T13", "854-T14", "854-T15", "854-T16",
-    "854-T17", "854-T18", "854-T22", "854-T23", "854-T24", "854-T25",
-    "854-T30", "854-T45"
-  ]
+  }
 }
