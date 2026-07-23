@@ -12,8 +12,6 @@ router = APIRouter()
 @router.get(
     "/delivery/orders",
     response_model=List[schemas.Order],
-    # we exclude this endpoint from the OpenAPI schema because
-    # it is not intended for public use!
     include_in_schema=False,
 )
 def get_orders(

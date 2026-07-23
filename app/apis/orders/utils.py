@@ -7,11 +7,7 @@ def fetch_order_status_from_delivery_service(order_id: int):
     In a real scenario, this would make an actual API call.
     """
 
-    # Simulate external API call
     # In reality: response = requests.get(f"https://delivery.service/api/orders/{order_id}")
-
-    # Simulated response from external service
-    # This data could be malicious and contain SQL injection payloads
     return {
         "order_id": order_id,
         "status": "ON_THE_WAY",

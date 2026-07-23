@@ -19,8 +19,6 @@ class ENV(Enum):
 ENVIRONMENT = ENV(os.getenv("ENV", ENV.PRODUCTION.value))
 
 
-# 6 digits random secrets are secure enough,
-# I don't believe someone could brute-force them
 def generate_random_secret():
     return "".join(random.choices("1234567890", k=6))
 
@@ -29,7 +27,6 @@ class Settings:
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", generate_random_secret())
     CHEF_USERNAME = os.getenv("CHEF_USERNAME", "chef")
 
-    # someone needs to remember to set this variable to True in env variables
     JWT_VERIFY_SIGNATURE = os.getenv("JWT_VERIFY_SIGNATURE")
 
     POSTGRES_USER: str = os.getenv("POSTGRES_USER", "admin")
@@ -38,10 +35,9 @@ class Settings:
     POSTGRES_PORT: str = os.getenv("POSTGRES_PORT", 5432)
     POSTGRES_DB: str = os.getenv("POSTGRES_DB", "restaurant")
 
-    TITLE: str = "Damn Vulnerable RESTaurant"
+    TITLE: str = "RESTaurant API"
     DESCRIPTION: str = (
-        "An intentionally vulnerable API service designed for learning and training purposes for ethical hackers, security engineers"
-        ", and developers."
+        "RESTaurant API - a restaurant ordering and menu management service."
     )
     VERSION: str = "1.0.0"
 

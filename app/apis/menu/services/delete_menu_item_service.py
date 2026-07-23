@@ -1,6 +1,6 @@
-from apis.auth.utils import RolesBasedAuthChecker, get_current_user
+from apis.auth.utils import get_current_user
 from apis.menu import utils
-from db.models import User, UserRole
+from db.models import User
 from db.session import get_db
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
@@ -14,6 +14,5 @@ def delete_menu_item(
     item_id: int,
     current_user: Annotated[User, Depends(get_current_user)],
     db: Session = Depends(get_db),
-    # auth=Depends(RolesBasedAuthChecker([UserRole.EMPLOYEE, UserRole.CHEF])),
 ):
     utils.delete_menu_item(db, item_id)

@@ -163,6 +163,3 @@ cython_debug/
 postgres_data
 .pytest_cache
 test_db.db
-
-# IDE settings
-.vscode/settings.json

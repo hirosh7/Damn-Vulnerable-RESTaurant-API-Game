@@ -20,11 +20,6 @@ class UserRead(BaseModel):
 
 
 class UserUpdate(BaseModel, extra=Extra.allow):
-    # we use extra=Extra.allow in the model
-    # it allows for extra fields passed in HTTP request body
-    # so we don't need to specify all fields
-    # if any new fields are added to the User model over the time
-    # it's super useful feature!
     first_name: Union[str, None] = None
     last_name: Union[str, None] = None
     phone_number: Union[str, None] = None
