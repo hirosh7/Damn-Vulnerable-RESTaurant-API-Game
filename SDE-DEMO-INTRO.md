@@ -30,8 +30,35 @@ Call `test_connection` (or `business_unit` `op: "list"`). On success:
 
 ## Step 1: Gather User Inputs (LIVE — this is the demo moment)
 
-Ask ONE AT A TIME via `ask_question` / AskUserQuestion, wait for a real answer each time, and
-echo back the selection before moving on:
+Ask ONE AT A TIME via the **`AskUserQuestion`** tool (NOT a tool literally named `ask_question` —
+that name comes from the original SDE contract's generic description and does not exist in this
+environment). Wait for a real answer each time, and echo back the selection before moving on.
+
+**`AskUserQuestion` parameter shape (get this right on the first call):**
+```json
+{
+  "questions": [
+    {
+      "question": "Which repository would you like to harden?",
+      "header": "Repository",           // <= 12 chars, a short chip label, NOT a full sentence
+      "multiSelect": false,               // REQUIRED, even when only one answer is expected
+      "options": [
+        { "label": "Damn-Vulnerable-RESTaurant-API-Game", "description": "Current working directory" },
+        { "label": "Enter path manually", "description": "Specify a different repository path" }
+      ]
+    }
+  ]
+}
+```
+Notes:
+- `options` items are `{label, description}` — there is **no `id` field** (unlike the generic
+  `ask_question` description elsewhere in the original contract). Use the `label` text itself as
+  the selected value.
+- `header` is a short chip (~12 chars max), not the question text — put the real question in
+  `question`.
+- `multiSelect` is required on every question object, even single-answer ones — set it `false`.
+- 2–4 `options` per question (an "Other" free-text option is offered automatically — don't add
+  your own).
 
 1. **Repository** — "Which repository would you like to harden?" Offer the current repo path plus
    a manual-entry option. Store `repository_path`.
